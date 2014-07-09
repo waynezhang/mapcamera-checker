@@ -1,0 +1,12 @@
+{
+  "name": "mapcamera-checker",
+  "version": "0.0.1",
+  "dependencies": {
+    "request": "*",
+    "cheerio": "*",
+    "node-persist": "*",
+    "node-schedule": "*",
+    "underscore": "*"
+  },
+  "license": "MIT"
+}
