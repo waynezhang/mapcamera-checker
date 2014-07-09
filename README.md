@@ -5,7 +5,7 @@ MapCamera Checker
 
 ### Pre
 
-`npm install`
+`npm install`  
 `npm install -g forever coffee-script`
 
 ### Run
