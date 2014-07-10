@@ -39,7 +39,16 @@ getNotifier = (meta) ->
     data = { user_credentials: meta.user_credentials, "notification[title]": message }
     request.post "https://new.boxcar.io/api/notifications", { form: data }
 
-schedule.scheduleJob "0,30 * * * *", ->
+startFunc =  ->
   storage.initSync()
   keywords = storage.getItem "keywords"
   search keyword, getChecker(keyword) for keyword in keywords
+
+cron = process.argv.slice 2
+if cron.length == 0
+  startFunc()
+else
+  cronStr = cron.join " "
+  cronStr += " *" for i in [1..(5 - cron.length)]
+  console.log "#{ new Date() }: scheduled job #{ cronStr }"
+  schedule.scheduleJob cronStr, startFunc
