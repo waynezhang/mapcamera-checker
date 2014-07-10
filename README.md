@@ -13,4 +13,6 @@ _`user_credentials` is the access token of BoxCar for push notifications_
 
 ### Run
 
-`forever start -c coffee app.coffee`
+`forever start -c coffee app.coffee "cronjob schedule string"`  
+
+e.g. `forever start -c coffee app.coffee "0,30 * * * *"`
