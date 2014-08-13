@@ -12,9 +12,16 @@ search = (meta, callback) ->
     $ = cheerio.load body
     items = $(".itembox p.txt")
       .map (i, e) ->
+        price = $("span.price span.txtred", e)
+        if price.length > 0
+          price = price.text()
+        else
+          price = $("span.price", e).text()
+
         return {
           title: $("a", e).text(),
-          price: $("span.price", e).text() }
+          price: price
+        }
       .filter (i, e) ->
         return e.price != 'SOLD OUT'
       .toArray()
