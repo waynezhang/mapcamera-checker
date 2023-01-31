@@ -75,6 +75,5 @@ if cron.length == 0
   startFunc()
 else
   cronStr = cron.join " "
-  cronStr += " *" for i in [1..(5 - cron.length)]
   console.log "#{ new Date() }: scheduled job #{ cronStr }"
   schedule.scheduleJob cronStr, startFunc
