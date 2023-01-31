@@ -2,7 +2,7 @@
   "name": "mapcamera-checker",
   "version": "0.0.1",
   "dependencies": {
-    "request": "*",
+    "axios": "*",
     "cheerio": "*",
     "node-persist": "*",
     "node-schedule": "*",

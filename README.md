@@ -8,8 +8,8 @@ MapCamera Checker
 `npm install`  
 `npm install -g forever coffee-script`
 
-Copy `persist/keywords.sample` to `persist/keywords` and make the changes.  
-_`user_credentials` is the access token of BoxCar for push notifications_
+Copy `persist/59aeb2c9970b7b25be2fab2317e31fcb.sample` to `persist/59aeb2c9970b7b25be2fab2317e31fcb` and make the changes.  
+_`ntfy_topic` is the topic of ntfy.sh for push notifications_
 
 ### Run
 

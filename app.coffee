@@ -1,15 +1,20 @@
-request  = require 'request'
+axios    = require 'axios'
 cheerio  = require 'cheerio'
 storage  = require 'node-persist'
 schedule = require 'node-schedule'
 _        = require 'underscore'
 
-search = (meta, callback) ->
+search = (meta) ->
   console.log "#{ new Date() }: checking #{ meta.title }"
-  url = meta.url
-  request url, (err, resp, body) ->
-    if err then return
-    $ = cheerio.load body
+  url = meta.url.replace('www.mapcamera.com/search', 'www.mapcamera.com/ec/api/itemsearch') + '&siteid=1&limit=100&page=1&devicetype=pc&format=searchresult'
+  options = {
+    headers: {
+      'Referer': meta.url
+    }
+  }
+  try
+    body = await axios url, options
+    $ = cheerio.load body.data.itemSearchHtml
     items = $(".itembox p.txt")
       .map (i, e) ->
         price = $("span.price span.txtred", e)
@@ -17,39 +22,53 @@ search = (meta, callback) ->
           price = price.text()
         else
           price = $("span.price", e).text()
+        link = $("a", e).attr("href")
 
         return {
           title: $("a", e).text(),
-          price: price
+          price: price,
+          link: link
         }
       .filter (i, e) ->
         return e.price != 'SOLD OUT'
       .toArray()
-    callback items
+    return items
+  catch e
+    console.log "Fetch error: " + e
+    return null
 
-getChecker = (keyword) ->
+getChecker = (meta) ->
   return (items) ->
-    storage.initSync()
-    lastCheck = _.map storage.getItem(keyword.title), (e) -> return e.title
+    await storage.init()
+    lastCheck = _.map await storage.getItem(meta.title), (e) -> return e.title
     titles = _.map items, (e) -> return e.title
     newly = _.difference titles, lastCheck
     if newly.length > 0
-      console.log "#{ new Date() }: #{ newly.length } new #{ keyword.title }s"
+      console.log "#{ new Date() }: #{ newly.length } new #{ meta.title }s"
       for n in newly
-        p = _.filter items, (e) -> return e.title == n
-        getNotifier(keyword) "New Item: #{ n }, price #{ p[0].price }"
-    console.log "#{ new Date() }: checked #{ keyword.title }"
-    storage.setItem keyword.title, items
+        e = _.filter items, (e) -> return e.title == n
+        getNotifier(meta) "New item: #{ n }, price #{ e[0].price }", e[0].link
+    console.log "#{ new Date() }: checked #{ meta.title }"
+    await storage.setItem meta.title, items
 
 getNotifier = (meta) ->
-  return (message) ->
-    data = { user_credentials: meta.user_credentials, "notification[title]": message }
-    request.post "https://new.boxcar.io/api/notifications", { form: data }
+  return (message, link) ->
+    data = {
+      "topic": meta.ntfy_topic,
+      "message": message,
+      "title": "New item!",
+      "click": link
+    }
+    await axios.post "https://ntfy.sh", JSON.stringify(data)
 
 startFunc =  ->
-  storage.initSync()
-  keywords = storage.getItem "keywords"
-  search keyword, getChecker(keyword) for keyword in keywords
+  await storage.init({ dir: 'persist' })
+  keywords = await storage.getItem "keywords"
+  for keyword in keywords
+    do (keyword) ->
+      check = getChecker keyword
+      items = await search keyword
+      await check items
 
 cron = process.argv.slice 2
 if cron.length == 0
