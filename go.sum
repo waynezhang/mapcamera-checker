@@ -1,0 +1,12 @@
+github.com/Jipok/go-persist v1.9.1 h1:RDYl/HaJ5JHFzc92BaTC3au71tCDJXI4FJcmPtD4WI4=
+github.com/Jipok/go-persist v1.9.1/go.mod h1:n/n+Ka7kgwWMuWxGHGKygI8wb4+RSqpjGkusa+POa9g=
+github.com/TwinProduction/gdstore v0.1.6 h1:OJvOqSOFHm8ic8ZFRI7/zTUanzQydRCIOq1d+Id+PQs=
+github.com/TwinProduction/gdstore v0.1.6/go.mod h1:ZRKBps44R0Q0S84mTtwnu6chOSl6WBVQTsx/GnSd9ZY=
+github.com/goccy/go-json v0.10.5 h1:Fq85nIqj+gXn/S5ahsiTlK3TmC85qgirsdTP/+DeaC4=
+github.com/goccy/go-json v0.10.5/go.mod h1:oq7eo15ShAhp70Anwd5lgX2pLfOS3QCiwU/PULtXL6M=
+github.com/google/btree v1.0.0 h1:0udJVsspx3VBr5FwtLhQQtuAsVc79tTq0ocGIPAU6qo=
+github.com/google/btree v1.0.0/go.mod h1:lNA+9X1NB3Zf8V7Ke586lFgjr2dZNuvo3lPJSGZ5JPQ=
+github.com/peterbourgon/diskv/v3 v3.0.1 h1:x06SQA46+PKIUftmEujdwSEpIx8kR+M9eLYsUxeYveU=
+github.com/peterbourgon/diskv/v3 v3.0.1/go.mod h1:kJ5Ny7vLdARGU3WUuy6uzO6T0nb/2gWcT1JiBvRmb5o=
+github.com/puzpuzpuz/xsync/v3 v3.5.1 h1:GJYJZwO6IdxN/IKbneznS6yPkVC+c3zyY/j19c++5Fg=
+github.com/puzpuzpuz/xsync/v3 v3.5.1/go.mod h1:VjzYrABPabuM4KyBh1Ftq6u8nhwY5tBPKP9jpmh0nnA=
