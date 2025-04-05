@@ -3,16 +3,24 @@ mapcamera-checker
 
 MapCamera Checker
 
-### Pre
+### Build
 
-`npm install`  
-`npm install -g forever coffee-script`
-
-Copy `persist/59aeb2c9970b7b25be2fab2317e31fcb.sample` to `persist/59aeb2c9970b7b25be2fab2317e31fcb` and make the changes.  
-_`ntfy_topic` is the topic of ntfy.sh for push notifications_
+```bash
+$ make build
+```
 
 ### Run
 
-`forever start -c coffee app.coffee "cronjob schedule string"`  
+```
+$ mc keyword
+```
 
-e.g. `forever start -c coffee app.coffee "0,30 * * * *"`
+`keyword` starts with `keyword=` and is escaped. For example use `keyword=leica%20m11` from the following url: https://www.mapcamera.com/search?keyword=leica%20m11&igngkeyword=1
+
+### Notify
+
+Use `NTFY_TOPIC` environment to enable push notification
+
+### Healthcheck
+
+Use `HC_SLUG` environment to enable healthcheck.io ping.
